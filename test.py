@@ -15,9 +15,32 @@ class ParkingLot:
         return slots
 
     def park(self, reg_no, colour):
+        if(len(self.blocked)==self.slots):
+            print("Sorry, parking lot is full")
+        else:
+            all_slots = [x for x in range(1, self.slots + 1)]
+            block_list = set(self.blocked)
+            #print(all_slots)
+            available = list(block_list ^ set(all_slots))
+            self.blocked += [available[0]]
+            self.occupancy += [[available[0], reg_no, colour]]
+            print("Allocated slot number: " + str(available[0]))
         return reg_no
 
     def leave(self, slot):
+        #print(self.occupancy, self.blocked)
+        position = 0
+        for car in self.occupancy:
+            if(int(slot) in car):
+                del self.occupancy[position]
+                del self.blocked[position]
+                #print(self.occupancy, self.blocked)
+                break
+            position += 1
+        if('\n' in str(slot)):
+            print("Slot number " + str(slot[0:-1]) + " is free")
+        else:
+            print("Slot number " + str(slot) + " is free")
         return slot
 
     def status(self):
