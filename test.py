@@ -3,8 +3,15 @@ import sys
 class ParkingLot:
     def __init__(self):
         self.slots = 0
+        self.blocked = []
+        self.occupancy = []
 
     def create_parking_lot(self, slots):
+        self.slots = int(slots)
+        if('\n' in str(slots)):
+            print("Created a parking lot with " + str(slots[0:-1]) + " slots")
+        else:
+            print("Created a parking lot with " + str(slots[0]) + " slots")
         return slots
 
     def park(self, reg_no, colour):
