@@ -44,15 +44,45 @@ class ParkingLot:
         return slot
 
     def status(self):
+        print("Slot No.\tRegistration No\t\tColour")
+        cars = self.occupancy
+        #print(cars)
+        for details in cars:
+            print(str(details[0]) + '\t\t' + details[1] + '\t\t' + details[2])
         return 0
 
     def registration_numbers_for_cars_with_colour(self, colour):
+        cars = self.occupancy
+        #print(cars)
+        statement = ""
+        for details in cars:
+            if(colour in details):
+                statement += details[1] + ", "
+        print(statement[0:-2])
         return statement
 
     def slot_numbers_for_cars_with_colour(self, colour):
+        cars = self.occupancy
+        #print(cars)
+        statement = ""
+        for details in cars:
+            if(colour in details):
+                statement += str(details[0]) + ", "
+        print(statement[0:-2])
         return statement
 
     def slot_number_for_registration_number(self, reg_no):
+        cars = self.occupancy
+        iter = 1
+        if('\n' in reg_no):
+            reg_no = reg_no[0:-1]
+        for details in cars:
+            if(reg_no in details):
+                print(str(details[0]))
+                break
+            iter += 1
+        if(iter-1 == self.slots):
+            print("Not Found")
         return reg_no
 
     def action(self, command):
