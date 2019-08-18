@@ -5,3 +5,12 @@
 #
 # After this is run, bin/parking_lot
 # should Just Work.
+
+python3 -m pip install unittest
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+python3 -m py_compile $DIR/../main.py $DIR/../parking_lot/parking.py
+
+
+python3 $DIR/../test.py
