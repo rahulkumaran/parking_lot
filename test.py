@@ -7,6 +7,13 @@ class ParkingLot:
         self.occupancy = []
 
     def create_parking_lot(self, slots):
+        '''
+        Class function to help create
+        the parking lot with required
+        slots
+
+        slots : string
+        '''
         self.slots = int(slots)
         if('\n' in str(slots)):
             print("Created a parking lot with " + str(slots[0:-1]) + " slots")
@@ -15,6 +22,13 @@ class ParkingLot:
         return slots
 
     def park(self, reg_no, colour):
+        '''
+        Class function to park cars
+        in the parking
+
+        reg_no : string
+        colour : string
+        '''
         if(len(self.blocked)==self.slots):
             print("Sorry, parking lot is full")
         else:
@@ -28,13 +42,18 @@ class ParkingLot:
         return reg_no
 
     def leave(self, slot):
-        #print(self.occupancy, self.blocked)
+        '''
+        Class function to release
+        parking slots from parking
+        lot when they leaveself.
+
+        slot : string
+        '''
         position = 0
         for car in self.occupancy:
             if(int(slot) in car):
                 del self.occupancy[position]
                 del self.blocked[position]
-                #print(self.occupancy, self.blocked)
                 break
             position += 1
         if('\n' in str(slot)):
@@ -44,16 +63,27 @@ class ParkingLot:
         return slot
 
     def status(self):
+        '''
+        Class function to check status
+        of the car parking at any given
+        period.
+
+        '''
         print("Slot No.\tRegistration No\t\tColour")
         cars = self.occupancy
-        #print(cars)
         for details in cars:
             print(str(details[0]) + '\t\t' + details[1] + '\t\t' + details[2])
         return 0
 
     def registration_numbers_for_cars_with_colour(self, colour):
+        '''
+        Class function to get the
+        registration number of cars
+        given the colour.
+
+        colour : string
+        '''
         cars = self.occupancy
-        #print(cars)
         statement = ""
         for details in cars:
             if(colour in details):
@@ -62,8 +92,14 @@ class ParkingLot:
         return statement
 
     def slot_numbers_for_cars_with_colour(self, colour):
+        '''
+        Class function to retrieve
+        slots of cars in parking lot
+        given a colour
+
+        colour : string
+        '''
         cars = self.occupancy
-        #print(cars)
         statement = ""
         for details in cars:
             if(colour in details):
@@ -72,6 +108,13 @@ class ParkingLot:
         return statement
 
     def slot_number_for_registration_number(self, reg_no):
+        '''
+        Class function to retrieve
+        slot of car in parking lot
+        given registration number.
+
+        reg_no : string
+        '''
         cars = self.occupancy
         iter = 1
         if('\n' in reg_no):
@@ -86,6 +129,13 @@ class ParkingLot:
         return reg_no
 
     def action(self, command):
+        '''
+        Class function to help redirect
+        code to required function after
+        parsing commands
+
+        command : string
+        '''
         if(command[0]=="create_parking_lot"):
             self.create_parking_lot(command[1])
         elif(command[0]=="park"):
@@ -111,14 +161,12 @@ if (len(sys.argv)==2):
     file = open(sys.argv[1],'r+')
     parking = ParkingLot()
     for line in file:
-        #print(line)
         parking.action(line.split(" "))
 elif(len(sys.argv)==1):
     command = ""
     parking = ParkingLot()
     while(True):
         command = input("\n$ ")
-        command = command.split(" ")
-        parking.action(command)
+        parking.action(command.split(" "))
 else:
     print("Please run the program in the right manner!")
