@@ -25,6 +25,95 @@ class ParkingLot:
             print("Please enter an integer number of slots!")
             return 0
 
+    def status(self):
+        '''
+        Class function to check status
+        of the car parking at any given
+        period.
+
+        '''
+        if(len(self.blocked)==0):
+            print("No cars found in parking lot at the moment.")
+        print("Slot No.\tRegistration No\t\tColour")
+        cars = self.occupancy
+        for details in cars:
+            print(str(details[0]) + '\t\t' + details[1] + '\t\t' + details[2])
+        return 0
+
+    def registration_numbers_for_cars_with_colour(self, colour):
+        '''
+        Class function to get the
+        registration number of cars
+        given the colour.
+
+        colour : string
+        '''
+        try:
+            cars = self.occupancy
+            statement = ""
+            for details in cars:
+                if(colour in details):
+                    statement += details[1] + ", "
+            if(statement == ""):
+                print("No cars found in the parking lot with the colour " + colour)
+            else:
+                print(statement[0:-2])
+            return statement
+        except:
+            print("Sorry, faced an unexpected trouble. Please type in your command again!")
+            return 0
+
+    def slot_numbers_for_cars_with_colour(self, colour):
+        '''
+        Class function to retrieve
+        slots of cars in parking lot
+        given a colour
+
+        colour : string
+        '''
+        try:
+            cars = self.occupancy
+            statement = ""
+            for details in cars:
+                if(colour in details):
+                    statement += str(details[0]) + ", "
+            if(statement == ""):
+                print("No cars found in the parking lot with the colour " + colour)
+            else:
+                print(statement[0:-2])
+            return statement
+        except:
+            print("Sorry, faced an unexpected trouble. Please type in your command again!")
+            return 0
+
+    def slot_number_for_registration_number(self, reg_no):
+        '''
+        Class function to retrieve
+        slot of car in parking lot
+        given registration number.
+
+        reg_no : string
+        '''
+        try:
+            cars = self.occupancy
+            iter = 1
+            if('\n' in reg_no):
+                reg_no = reg_no[0:-1]
+            for details in cars:
+                if(reg_no in details):
+                    print(str(details[0]))
+                    break
+                iter += 1
+            if(iter-1 == self.slots):
+                print("Not Found")
+            return reg_no
+        except:
+            print("Sorry, faced an unexpected trouble. Please type in your command again!")
+            return 0
+
+class Cars(ParkingLot):
+    def __init__(self):
+        super().__init__()
     def park(self, reg_no, colour):
         '''
         Class function to park cars
@@ -75,84 +164,6 @@ class ParkingLot:
         except ValueError:
             print("Please enter an integer number of slots!")
             return 0
-
-    def status(self):
-        '''
-        Class function to check status
-        of the car parking at any given
-        period.
-
-        '''
-        if(len(self.blocked)==0):
-            print("No cars found in parking lot at the moment.")
-        print("Slot No.\tRegistration No\t\tColour")
-        cars = self.occupancy
-        for details in cars:
-            print(str(details[0]) + '\t\t' + details[1] + '\t\t' + details[2])
-        return 0
-
-    def registration_numbers_for_cars_with_colour(self, colour):
-        '''
-        Class function to get the
-        registration number of cars
-        given the colour.
-
-        colour : string
-        '''
-        try:
-            cars = self.occupancy
-            statement = ""
-            for details in cars:
-                if(colour in details):
-                    statement += details[1] + ", "
-            if(statement == ""):
-                print("No cars found in the parking lot with the colour " + colour)
-            else:
-                print(statement[0:-2])
-            return statement
-        except:
-            print("Sorry, faced an unexpected trouble. Please type in your command again!")
-            return 0
-
-    def slot_numbers_for_cars_with_colour(self, colour):
-        '''
-        Class function to retrieve
-        slots of cars in parking lot
-        given a colour
-
-        colour : string
-        '''
-        cars = self.occupancy
-        statement = ""
-        for details in cars:
-            if(colour in details):
-                statement += str(details[0]) + ", "
-        if(statement == ""):
-            print("No cars found in the parking lot with the colour " + colour)
-        else:
-            print(statement[0:-2])
-        return statement
-
-    def slot_number_for_registration_number(self, reg_no):
-        '''
-        Class function to retrieve
-        slot of car in parking lot
-        given registration number.
-
-        reg_no : string
-        '''
-        cars = self.occupancy
-        iter = 1
-        if('\n' in reg_no):
-            reg_no = reg_no[0:-1]
-        for details in cars:
-            if(reg_no in details):
-                print(str(details[0]))
-                break
-            iter += 1
-        if(iter-1 == self.slots):
-            print("Not Found")
-        return reg_no
 
     def action(self, command):
         '''
