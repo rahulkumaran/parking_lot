@@ -7,6 +7,7 @@
 # This variable contains absolute path of this `parking_lot` script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+python3 $DIR/../main.py $DIR/../$1	#Assuming the file_inputs.txt folder is placed in the root folder
 # Use DIR variable above to pinpoint your jar/executable/main class
 # e.g.
 # - if java
