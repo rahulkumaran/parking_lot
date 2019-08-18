@@ -15,11 +15,14 @@ class ParkingLot:
         slots : string
         '''
         try:
-            self.slots = int(slots)
-            if('\n' in str(slots)):
+            if(int(slots) < 0):
+                print("Cannot create parking with negative slots")
+
+            elif('\n' in str(slots)):
                 print("Created a parking lot with " + str(slots[0:-1]) + " slots")
             else:
                 print("Created a parking lot with " + str(slots[0]) + " slots")
+            self.slots = int(slots)
             return slots
         except ValueError:
             print("Please enter an integer number of slots!")
@@ -38,7 +41,7 @@ class ParkingLot:
         cars = self.occupancy
         for details in cars:
             print(str(details[0]) + '\t\t' + details[1] + '\t\t' + details[2])
-        return 0
+        return self.blocked
 
     def registration_numbers_for_cars_with_colour(self, colour):
         '''
@@ -58,7 +61,7 @@ class ParkingLot:
                 print("No cars found in the parking lot with the colour " + colour)
             else:
                 print(statement[0:-2])
-            return statement
+            return statement[0:-2]
         except:
             print("Sorry, faced an unexpected trouble. Please type in your command again!")
             return 0
@@ -81,7 +84,7 @@ class ParkingLot:
                 print("No cars found in the parking lot with the colour " + colour)
             else:
                 print(statement[0:-2])
-            return statement
+            return statement[0:-2]
         except:
             print("Sorry, faced an unexpected trouble. Please type in your command again!")
             return 0
@@ -106,7 +109,7 @@ class ParkingLot:
                 iter += 1
             if(iter-1 == self.slots):
                 print("Not Found")
-            return reg_no
+            return details[0]
         except:
             print("Sorry, faced an unexpected trouble. Please type in your command again!")
             return 0
@@ -114,6 +117,7 @@ class ParkingLot:
 class Cars(ParkingLot):
     def __init__(self):
         super().__init__()
+
     def park(self, reg_no, colour):
         '''
         Class function to park cars
@@ -127,10 +131,10 @@ class Cars(ParkingLot):
                 print("Please create a parking lot first to park cars!")
             elif(len(self.blocked)==self.slots):
                 print("Sorry, parking lot is full")
+                return 0
             else:
                 all_slots = [x for x in range(1, self.slots + 1)]
                 block_list = set(self.blocked)
-                #print(all_slots)
                 available = list(block_list ^ set(all_slots))
                 self.blocked += [available[0]]
                 self.occupancy += [[available[0], reg_no, colour]]
@@ -138,7 +142,7 @@ class Cars(ParkingLot):
             return reg_no
         except:
             print("Sorry, faced an unexpected trouble. Please type in your command again!")
-            return 0
+            return -1
 
     def leave(self, slot):
         '''
@@ -163,7 +167,7 @@ class Cars(ParkingLot):
             return slot
         except ValueError:
             print("Please enter an integer number of slots!")
-            return 0
+            return -1
 
     def action(self, command):
         '''
